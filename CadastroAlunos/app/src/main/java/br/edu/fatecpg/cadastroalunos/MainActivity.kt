@@ -7,8 +7,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import br.edu.fatecpg.cadastroalunos.dao.UserDao
+import br.edu.fatecpg.cadastroalunos.model.User
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,13 +22,14 @@ class MainActivity : AppCompatActivity() {
         btnCadastrar.setOnClickListener {
             val nome = edtNome.text.toString().trim()
             if (nome.isNotEmpty()) {
+                val usuario = User(nome)
+                UserDao.definirUsuario(usuario)
+
                 val intent = Intent(this, AlunosActivity::class.java)
-                intent.putExtra("nome", nome)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Digite o nome.", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 }

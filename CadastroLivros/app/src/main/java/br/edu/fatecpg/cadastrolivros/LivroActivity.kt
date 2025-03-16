@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.edu.fatecpg.cadastrolivros.dao.LivroDao
 
 class LivroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,11 +19,10 @@ class LivroActivity : AppCompatActivity() {
         val txtTitulo = findViewById<TextView>(R.id.txt_titulo)
         val txtAutor = findViewById<TextView>(R.id.txt_autor)
 
-        val titulo = intent.getStringExtra("titulo")
-        val autor = intent.getStringExtra("autor")
+        val livro = LivroDao.retornarLivro()
 
-        txtTitulo.text = "Título: $titulo"
-        txtAutor.text = "Autor: $autor"
+        txtTitulo.text = "Título: ${livro.titulo}"
+        txtAutor.text = "Autor: ${livro.autor}"
 
         fabSair.setOnClickListener {
             finish()

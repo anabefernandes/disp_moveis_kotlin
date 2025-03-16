@@ -8,22 +8,30 @@ import androidx.appcompat.app.AppCompatActivity
 import br.edu.fatecpg.novamenteduastelas.dao.UsuarioDao
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class UsuarioActivity : AppCompatActivity() {
+class UsuarioActivity : AppCompatActivity(R.layout.activity_usuario) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_usuario)
-
 
         val fabSair = findViewById<Button>(R.id.fabSair)
         val txvNome = findViewById<TextView>(R.id.txv_nome)
         val txvTemperatura = findViewById<TextView>(R.id.txv_temperatura)
 
-        val nomeUsuario = intent.getStringExtra("usuarioNome")
-        val fahrenheit = intent.getDoubleExtra("fahrenheit", 0.0)
+        val usuario = UsuarioDao.obterUsuario()
 
-        txvNome.text = "Olá, $nomeUsuario!"
-        txvTemperatura.text = "A temperatura em Fahrenheit é: $fahrenheit"
+//        val nomeUsuario = intent.getStringExtra("usuarioNome")
+//        val fahrenheit = intent.getDoubleExtra("fahrenheit", 0.0)
+
+//        txvNome.text = "Olá, $nomeUsuario!"
+//        txvTemperatura.text = "A temperatura em Fahrenheit é: $fahrenheit"
+
+        if (usuario != null) {
+            txvNome.text = "Olá, ${usuario.nome}!"
+            txvTemperatura.text = "A temperatura em Fahrenheit é: ${usuario.temperatura}"
+        }else {
+            txvNome.text = "Usuário não encontrado."
+            txvTemperatura.text = ""
+        }
 
         fabSair.setOnClickListener {
             finish()

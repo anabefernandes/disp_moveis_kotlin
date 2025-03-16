@@ -5,8 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import br.edu.fatecpg.cadastroalunos.dao.UserDao
 import kotlin.random.Random
 
 class AlunosActivity : AppCompatActivity() {
@@ -20,18 +19,19 @@ class AlunosActivity : AppCompatActivity() {
         val btnGerarMatricula = findViewById<Button>(R.id.btn_gerar_matricula)
         val fabSair = findViewById<Button>(R.id.fab_sair)
 
-        val nome = intent.getStringExtra("nome")
-        txtNome.text = "Nome: $nome"
+        val usuario = UserDao.retornarUsuario()
+
+        if (usuario != null) {
+            txtNome.text = "Nome: ${usuario.nome}"
+        }
 
         btnGerarMatricula.setOnClickListener {
-            val matricula = Random.nextInt(100000, 999999).toString()
-            txtMatricula.text = "Matricula: $matricula"
+            usuario?.matricula = Random.nextInt(100000, 999999).toString()
+            txtMatricula.text = "Matricula: ${usuario?.matricula}"
         }
 
         fabSair.setOnClickListener {
             finish()
         }
-
-
     }
 }

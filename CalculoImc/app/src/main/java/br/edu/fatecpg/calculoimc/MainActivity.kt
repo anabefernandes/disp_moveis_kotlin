@@ -9,6 +9,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.edu.fatecpg.calculoimc.dao.ImcDao
+import br.edu.fatecpg.calculoimc.model.Imc
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +24,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         btnCalcular.setOnClickListener{
             val altura = txtAltura.text.toString().toDouble()
             val peso = txtPeso.text.toString().toDouble()
+
             if (altura != 0.0 || peso != 0.0) {
-                val imc = peso / (altura * altura)
+                val calcImc = peso / (altura * altura)
+                val imc = Imc(peso, altura, calcImc)
+
+                ImcDao.definirImc(imc)
+
                 val intent = Intent(this, CalculoActivity::class.java)
-                intent.putExtra("imc", imc)
                 startActivity(intent)
             } else {
                 val builder = AlertDialog.Builder(this)

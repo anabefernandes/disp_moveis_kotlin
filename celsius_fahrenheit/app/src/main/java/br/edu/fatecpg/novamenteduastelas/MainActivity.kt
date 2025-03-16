@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
                     UsuarioDao.definirUsuario(usuario)
 
                     val intent = Intent(this, UsuarioActivity::class.java)
-                    intent.putExtra("usuarioNome", nome)
-                    intent.putExtra("fahrenheit", temperatura)
+//                    intent.putExtra("usuarioNome", nome)
+//                    intent.putExtra("fahrenheit", temperatura)
                     startActivity(intent)
 
                 } else {

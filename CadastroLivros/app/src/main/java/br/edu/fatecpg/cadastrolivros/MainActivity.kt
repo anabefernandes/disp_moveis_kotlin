@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.edu.fatecpg.cadastrolivros.dao.LivroDao
+import br.edu.fatecpg.cadastrolivros.model.Livro
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,9 +27,10 @@ class MainActivity : AppCompatActivity() {
             val autor = edtAutor.text.toString()
 
             if (titulo.isNotEmpty() && autor.isNotEmpty()) {
+                val livro = Livro(titulo, autor)
+                LivroDao.definirLivro(livro)
+
                 val intent = Intent(this, LivroActivity::class.java)
-                intent.putExtra("titulo", titulo)
-                intent.putExtra("autor", autor)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()

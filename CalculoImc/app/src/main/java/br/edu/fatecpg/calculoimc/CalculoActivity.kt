@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import br.edu.fatecpg.calculoimc.dao.ImcDao
 
 class CalculoActivity : AppCompatActivity(R.layout.activity_calculo) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,15 +18,18 @@ class CalculoActivity : AppCompatActivity(R.layout.activity_calculo) {
         val txtResultado = findViewById<TextView>(R.id.txt_resultado)
         val txtImc = findViewById<TextView>(R.id.txt_imc)
 
-        val imc = intent.getDoubleExtra("imc", 0.0)
-        txtResultado.text = imc.toString()
-        if (imc < 18.5) {
+        val imc = ImcDao.retornarImc()
+        val valorImc = imc.calcImc
+
+        txtResultado.text = "IMC: $valorImc"
+
+        if (valorImc < 18.5) {
             txtImc.text = "Abaixo do peso."
-        } else if (imc == 18.5 || imc < 25) {
+        } else if (valorImc >= 18.5 && valorImc < 25) {
             txtImc.text = "Peso normal."
-        } else if (imc == 25.toDouble() || imc < 30) {
+        } else if (valorImc >= 25 && valorImc < 30) {
             txtImc.text = "Sobrepeso."
-        } else if (imc == 30.toDouble() || imc < 40) {
+        } else if (valorImc >= 30 && valorImc < 40) {
             txtImc.text = "Obesidade."
         } else {
             txtImc.text = "Obesidade grave."
